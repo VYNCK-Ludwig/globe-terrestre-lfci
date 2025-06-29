@@ -1,74 +1,75 @@
 window.onload = () => {
-  // Vérification que THREE est bien chargé
+  // Vérifier que THREE est bien là
   if (typeof THREE === "undefined") {
     console.error("❌ THREE.js n'est pas chargé !");
-    alert("Erreur : la bibliothèque Three.js est introuvable. Vérifie le lien dans index.html.");
+    alert("Erreur critique : Three.js est introuvable. Vérifie ton <script> dans index.html.");
     return;
   }
 
-  // Récupère le canvas HTML
+  // Récupération du canvas
   const canvas = document.getElementById("globe");
 
   if (!canvas) {
-    alert("❌ Le canvas #globe est introuvable !");
+    alert("❌ Le canvas avec id='globe' est introuvable !");
     return;
   }
 
-  // Teste si WebGL est disponible
+  // Vérification si un autre contexte n'a pas déjà été créé
+  if (canvas.getContext && canvas.getContext("2d")) {
+    alert("⚠️ Attention : ce canvas a déjà un contexte 2D. Impossible de créer WebGL.");
+    return;
+  }
+
+  // Vérifier que WebGL est disponible
   const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
   if (!gl) {
-    alert("❌ WebGL n’est pas disponible sur ce navigateur !");
-    console.error("WebGL non supporté ou bloqué.");
+    alert("❌ WebGL est bloqué ou non supporté !");
     return;
   }
 
-  // Crée le moteur de rendu WebGL
+  // Créer le renderer Three.js
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
   } catch (e) {
-    alert("❌ Impossible d'initialiser WebGLRenderer : " + e.message);
+    alert("❌ Échec du rendu WebGL : " + e.message);
     return;
   }
 
-  // Création de la scène
   const scene = new THREE.Scene();
 
-  // Caméra
-  const camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000
-  );
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.z = 3;
 
-  // Lumière directionnelle
   const light = new THREE.DirectionalLight(0xffffff, 1.2);
   light.position.set(3, 2, 5);
   scene.add(light);
 
-  // Chargement de la texture Terre
+  // Texture Terre
   const loader = new THREE.TextureLoader();
-  const texture = loader.load("Images/earth.jpg", () => {
-    const geometry = new THREE.SphereGeometry(1, 64, 64);
-    const material = new THREE.MeshStandardMaterial({ map: texture });
+  loader.load(
+    "Images/earth.jpg",
+    (texture) => {
+      const geometry = new THREE.SphereGeometry(1, 64, 64);
+      const material = new THREE.MeshStandardMaterial({ map: texture });
 
-    const earth = new THREE.Mesh(geometry, material);
-    scene.add(earth);
+      const earth = new THREE.Mesh(geometry, material);
+      scene.add(earth);
 
-    // Animation
-    function animate() {
-      requestAnimationFrame(animate);
-      earth.rotation.y += 0.003;
-      renderer.render(scene, camera);
+      function animate() {
+        requestAnimationFrame(animate);
+        earth.rotation.y += 0.003;
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    },
+    undefined,
+    (err) => {
+      console.error("❌ Erreur de chargement texture :", err);
+      alert("Impossible de charger la texture Terre.");
     }
-
-    animate();
-  }, undefined, (err) => {
-    console.error("❌ Erreur de chargement texture :", err);
-    alert("Erreur de chargement de la texture Terre.");
-  });
+  );
 };
