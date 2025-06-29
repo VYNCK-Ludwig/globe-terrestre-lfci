@@ -1,51 +1,44 @@
-// Sélection du canvas dans index.html
+// Sélection du canvas
 const canvas = document.getElementById("globe");
 
-// Création du moteur de rendu WebGL
+if (!canvas) {
+  alert("❌ Erreur : #globe introuvable !");
+  throw new Error("Canvas not found");
+}
+
+// Création du moteur de rendu
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
-// Scène & caméra
+// Scène + caméra
 const scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(
-  45,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 3;
 
-// Lumière directionnelle (comme le Soleil)
-const light = new THREE.DirectionalLight(0xffffff, 1);
-light.position.set(5, 3, 5);
+// Lumière directionnelle
+const light = new THREE.DirectionalLight(0xffffff, 1.2);
+light.position.set(3, 2, 5);
 scene.add(light);
 
-// Chargement de la texture Terre
-const textureLoader = new THREE.TextureLoader();
-const earthTexture = textureLoader.load("Images/earth.jpg");
+// Texture Terre
+const loader = new THREE.TextureLoader();
+const texture = loader.load("Images/earth.jpg", () => {
+  const geometry = new THREE.SphereGeometry(1, 64, 64);
+  const material = new THREE.MeshStandardMaterial({ map: texture });
 
-const geometry = new THREE.SphereGeometry(1, 64, 64);
-const material = new THREE.MeshStandardMaterial({
-  map: earthTexture,
-});
-const earth = new THREE.Mesh(geometry, material);
-scene.add(earth);
+  const sphere = new THREE.Mesh(geometry, material);
+  scene.add(sphere);
 
-// Fonction d'animation
-function animate() {
-  requestAnimationFrame(animate);
-  earth.rotation.y += 0.003;
-  renderer.render(scene, camera);
-}
+  // Animation
+  function animate() {
+    requestAnimationFrame(animate);
+    sphere.rotation.y += 0.003;
+    renderer.render(scene, camera);
+  }
 
-animate();
-// Gestion du redimensionnement de la fenêtre
-window.addEventListener("resize", () => {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  renderer.setSize(width, height);
-  camera.aspect = width / height;
-  camera.updateProjectionMatrix();
+  animate();
+}, undefined, err => {
+  console.error("❌ Échec de chargement de la texture :", err);
 });

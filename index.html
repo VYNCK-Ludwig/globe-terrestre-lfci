@@ -5,21 +5,21 @@
   <title>LFCI Conseillers Immobilier</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- 🖌️ Feuilles de style -->
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="globe.css" />
-  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-
+  <link rel="icon" href="favicon.ico" />
 </head>
 
 <body>
-  <!-- 🌍 Canvas pour le globe 3D -->
+  <!-- 🌍 Canvas du globe -->
   <canvas id="globe"></canvas>
   <div id="overlay">by eXpFrance</div>
 
+  <!-- 📜 Scripts, dans le bon ordre -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r148/three.min.js"></script>
+  <script src="globe.js"></script>
 
-
-  <!-- 🧾 Contenu principal -->
   <div class="contenu">
     <header>
       <h1>Ludwig & Frédéric Conseillers Immobiliers</h1>
@@ -39,15 +39,9 @@
     </section>
   </div>
 
-
   <footer>
     <p>&copy; LFCI - Tous droits réservés</p>
   </footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r148/three.min.js"></script>
-  <script src="globe.js"></script>
-
-</body>
-
+  
 </body>
 </html>
