@@ -43,4 +43,3 @@ window.addEventListener("DOMContentLoaded", () => {
     animate();
   });
 });
-console.log("🌍 Globe initialisé avec succès !");
