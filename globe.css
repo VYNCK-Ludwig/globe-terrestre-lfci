@@ -1,13 +1,28 @@
+/* 🌌 Fond et layout général */
 html, body {
   margin: 0;
+  padding: 0;
   height: 100%;
   overflow: hidden;
+  background-color: #000;
 }
 
-canvas {
+/* 🪐 Canvas principal */
+canvas#globe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   display: block;
+  pointer-events: none;
+  z-index: -1;
+
+  /* Debug uniquement : supprime cette ligne si ce n’est plus utile */
+  /* border: 2px solid red; */
 }
 
+/* 🏷️ Overlay de signature */
 #overlay {
   position: absolute;
   bottom: 40px;
@@ -17,29 +32,23 @@ canvas {
   font-size: 1.6em;
   color: #00AEEF;
   letter-spacing: 1.5px;
+  pointer-events: none;
   z-index: 10;
-  pointer-events: none;
-}
 
-canvas#globe {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  display: block;
-  pointer-events: none;
-  border: 2px solid red;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-#overlay {
+  /* ✨ Animation douce */
   animation: fadeIn 2s ease-out 1;
   animation-delay: 1s;
   animation-fill-mode: both;
+}
+
+/* ✨ Apparition en fondu depuis le bas */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
