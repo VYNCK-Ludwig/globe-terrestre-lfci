@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - Ajouter une Maison</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="ajouter-maison.css">
+</head>
+<body>
+
+  <h1>🏗️ Interface Admin - Ajouter une Maison</h1>
+
+  <div class="controls">
+    <button id="ajouter-maison">➕ Ajouter une nouvelle maison</button>
+  </div>
+
+  <div id="formulaire-ajout">
+    <h2>🏡 Nouvelle Maison</h2>
+    <form id="form-maison">
+      <label>Titre :</label>
+      <input type="text" name="titre" required>
+
+      <label>Prix (€) :</label>
+      <input type="number" name="prix" required>
+
+      <label>Description :</label>
+      <textarea name="description" rows="4" required></textarea>
+
+      <label>Image(s) :</label>
+      <input type="file" name="photos" accept="image/*" multiple>
+
+      <button type="submit">✅ Ajouter la maison</button>
+    </form>
+  </div>
+
+  <script src="ajouter-maison.js"></script>
+</body>
+</html>

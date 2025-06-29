@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Terrains à vendre - LFCI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-type="terrain">
+
+  <!-- Particules -->
+  <div id="particles-js"></div>
+
+  <!-- Contrôles thème/musique -->
+  <div class="controls">
+    <button id="toggle-theme">🌙 Mode nuit</button>
+    <button id="toggle-music">🔊 Couper la musique</button>
+  </div>
+
+  <audio id="bg-music" autoplay loop>
+    <source src="media/ambiance.mp3" type="audio/mpeg" />
+    Votre navigateur ne prend pas en charge l'audio.
+  </audio>
+
+  <header>
+    <h1>🏡 Terrains à vendre</h1>
+  </header>
+
+  <!-- Bloc admin -->
+  <div class="admin-only hidden" id="admin-controls">
+    <button id="ajouter-maison" class="btn-admin">➕ Ajouter un terrain</button>
+
+    <div id="formulaire-ajout" style="display: none;">
+      <h2>🏗️ Nouveau terrain</h2>
+      <form id="form-maison">
+  <label for="titre">Titre :</label>
+  <input type="text" id="titre" name="titre" required />
+
+  <label for="prix">Prix (€) :</label>
+  <input type="number" id="prix" name="prix" required />
+
+  <label for="description">Description :</label>
+  <textarea id="description" name="description" rows="4" required></textarea>
+
+  <label for="photos">Image(s) :</label>
+  <input type="file" id="photos" name="photos" accept="image/*" multiple />
+  <div id="aperçu-images" style="margin-top: 10px;"></div>  
+
+        <button type="submit">✅ Ajouter</button>
+      </form>
+    </div>
+  </div>
+
+<div class="filtres">
+  <input type="text" id="recherche-bien" placeholder="🔎 Rechercher un bien..." />
+  <select id="tri-bien">
+    <option value="">-- Trier par --</option>
+    <option value="prix-asc">Prix croissant</option>
+    <option value="prix-desc">Prix décroissant</option>
+    <option value="titre-asc">Titre A-Z</option>
+    <option value="titre-desc">Titre Z-A</option>
+  </select>
+</div>
+
+
+  <!-- Annonces -->
+  <div class="annonces"></div>
+
+  <!-- Scripts -->
+  <script src="charger-par-type.js?v=20250701_1820"></script>
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="particules.js"></script>
+  <script src="maisons-behavior.js"></script>
+</body>
+</html>
