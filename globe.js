@@ -1,5 +1,6 @@
 // Sélection du canvas
 const canvas = document.getElementById("globe");
+console.log("canvas trouvé ?", canvas)
 
 if (!canvas) {
   alert("❌ Erreur : #globe introuvable !");
