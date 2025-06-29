@@ -1,5 +1,4 @@
-window.addEventListener("DOMContentLoaded", () => {
-  // Vérifie si THREE est bien chargé
+window.onload = () => {
   if (typeof THREE === "undefined") {
     console.error("❌ THREE n'est toujours pas défini !");
     alert("Erreur : la bibliothèque Three.js n'est pas encore disponible.");
@@ -7,11 +6,14 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   const canvas = document.getElementById("globe");
-
   if (!canvas) {
     alert("❌ Le canvas #globe est introuvable !");
     return;
   }
+
+  // ... le reste de ton code ici ...
+};
+
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -42,4 +44,3 @@ window.addEventListener("DOMContentLoaded", () => {
 
     animate();
   });
-});
