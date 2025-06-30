@@ -1,24 +1,11 @@
+import * as THREE from 'three';
+
 window.onload = () => {
-  // Vérifie que Three.js est chargé
-  if (typeof THREE === "undefined") {
-    alert("❌ THREE.js n'est pas chargé !");
-    return;
-  }
+  const canvas = document.getElementById("globe-webgl");
+  const cleanCanvas = canvas.cloneNode(true);
+  canvas.parentNode.replaceChild(cleanCanvas, canvas);
 
-  // Récupère le canvas propre
-  const oldCanvas = document.getElementById("globe-webgl");
-  const canvas = oldCanvas.cloneNode(true);
-  oldCanvas.parentNode.replaceChild(canvas, oldCanvas);
-
-  // Teste la dispo WebGL
-  const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-  if (!gl) {
-    alert("❌ WebGL est bloqué ou non supporté !");
-    return;
-  }
-
-  // Crée le renderer Three.js
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+  const renderer = new THREE.WebGLRenderer({ canvas: cleanCanvas, antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
 
@@ -30,7 +17,6 @@ window.onload = () => {
   light.position.set(3, 2, 5);
   scene.add(light);
 
-  // Charge la texture
   const loader = new THREE.TextureLoader();
   loader.load("Images/earth.jpg", (texture) => {
     const earth = new THREE.Mesh(
@@ -45,8 +31,5 @@ window.onload = () => {
       renderer.render(scene, camera);
     };
     animate();
-  }, undefined, (err) => {
-    console.error("❌ Erreur chargement texture :", err);
-    alert("Erreur de chargement : earth.jpg manquant ?");
   });
 };

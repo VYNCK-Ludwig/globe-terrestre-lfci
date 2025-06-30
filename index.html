@@ -4,19 +4,22 @@
   <meta charset="UTF-8" />
   <title>LFCI Conseillers Immobilier</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Styles -->
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="globe.css" />
   <link rel="icon" href="favicon.ico" />
-</head>
 
+  <!-- Import map pour charger Three.js en module -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.148.0/build/three.module.js"
+      }
+    }
+  </script>
+</head>
 <body>
-  <!-- 🌍 Canvas du globe -->
   <canvas id="globe-webgl"></canvas>
   <div id="overlay">by eXpFrance</div>
-
-  
 
   <div class="contenu">
     <header>
@@ -25,7 +28,7 @@
     </header>
 
     <section id="intro">
-      <p>Bienvenue sur notre portail immobilier indépendant. Nous vous accompagnons dans tous vos projets d’achat ou de vente. Découvrez nos biens par catégorie :</p>
+      <p>Bienvenue sur notre portail immobilier indépendant...</p>
     </section>
 
     <section id="liens-categories">
@@ -41,10 +44,7 @@
     <p>&copy; LFCI - Tous droits réservés</p>
   </footer>
 
-  <!-- 📜 Scripts, dans le bon ordre -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.148.0/build/three.min.js"></script>
-
-  <script src="globe.js"></script>
-
+  <!-- Ton script principal en module -->
+  <script type="module" src="globe.js"></script>
 </body>
 </html>
