@@ -1,29 +1,28 @@
 window.onload = () => {
-  // Sécurisation : vérifie que THREE est bien chargé
+  // Vérifie que Three.js est chargé
   if (typeof THREE === "undefined") {
     alert("❌ THREE.js n'est pas chargé !");
     return;
   }
 
-  // Récupération du canvas dédié à WebGL
+  // Récupère le canvas propre
   const oldCanvas = document.getElementById("globe-webgl");
-  const canvas = oldCanvas.cloneNode(true); // Clone propre
-  oldCanvas.parentNode.replaceChild(canvas, oldCanvas); // Remplace le vieux canvas
+  const canvas = oldCanvas.cloneNode(true);
+  oldCanvas.parentNode.replaceChild(canvas, oldCanvas);
 
-  // Teste si WebGL est disponible
+  // Teste la dispo WebGL
   const gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
   if (!gl) {
-    alert("❌ WebGL n’est pas supporté ou bloqué par le navigateur.");
+    alert("❌ WebGL est bloqué ou non supporté !");
     return;
   }
 
-  // Initialisation du moteur WebGL
+  // Crée le renderer Three.js
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
 
   const scene = new THREE.Scene();
-
   const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera.position.z = 3;
 
@@ -31,30 +30,23 @@ window.onload = () => {
   light.position.set(3, 2, 5);
   scene.add(light);
 
-  // Charge la texture de la Terre
+  // Charge la texture
   const loader = new THREE.TextureLoader();
-  loader.load(
-    "Images/earth.jpg",
-    (texture) => {
-      const sphere = new THREE.Mesh(
-        new THREE.SphereGeometry(1, 64, 64),
-        new THREE.MeshStandardMaterial({ map: texture })
-      );
-      scene.add(sphere);
+  loader.load("Images/earth.jpg", (texture) => {
+    const earth = new THREE.Mesh(
+      new THREE.SphereGeometry(1, 64, 64),
+      new THREE.MeshStandardMaterial({ map: texture })
+    );
+    scene.add(earth);
 
-      // Animation
-      const animate = () => {
-        requestAnimationFrame(animate);
-        sphere.rotation.y += 0.003;
-        renderer.render(scene, camera);
-      };
-
-      animate();
-    },
-    undefined,
-    (err) => {
-      console.error("❌ Erreur de chargement texture :", err);
-      alert("Impossible de charger la texture earth.jpg.");
-    }
-  );
+    const animate = () => {
+      requestAnimationFrame(animate);
+      earth.rotation.y += 0.003;
+      renderer.render(scene, camera);
+    };
+    animate();
+  }, undefined, (err) => {
+    console.error("❌ Erreur chargement texture :", err);
+    alert("Erreur de chargement : earth.jpg manquant ?");
+  });
 };
